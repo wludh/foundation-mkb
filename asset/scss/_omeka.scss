@@ -140,8 +140,8 @@ body.vertical-menu #user-bar ~ #content {
 }
 
 .dropdown.menu > li.is-dropdown-submenu-parent.active > a:after {
-  border-color:  transparent transparent;
   margin-right: .5 * $global-margin;
+  
 }
 
 .dropdown.menu > li.is-dropdown-submenu-parent.active > a {
@@ -149,7 +149,7 @@ body.vertical-menu #user-bar ~ #content {
 }
 
 .dropdown.menu > li.is-dropdown-submenu-parent.active:hover > a {
-  background-color: $primary-color;
+  background-color: $wludarkblue;
   color: #fff;
 }
 
