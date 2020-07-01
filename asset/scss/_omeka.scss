@@ -141,7 +141,7 @@ body.vertical-menu #user-bar ~ #content {
 
 .dropdown.menu > li.is-dropdown-submenu-parent.active > a:after {
   margin-right: .5 * $global-margin;
-  
+
 }
 
 .dropdown.menu > li.is-dropdown-submenu-parent.active > a {
@@ -253,7 +253,7 @@ footer {
   padding: (2 * $global-padding) 0;
   
   @include breakpoint(small down) {
-    margin: 0 $global-margin;
+    margin: 0;
   }
 }
 
