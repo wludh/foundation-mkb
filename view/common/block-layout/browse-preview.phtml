@@ -1,6 +1,7 @@
 <?php
 $this->headScript()->appendFile($this->assetUrl('js/browse.js'));
 $translate = $this->plugin('translate');
+$escape = $this->plugin('escapeHtml');
 $layoutSetting = $this->themeSetting('browse_layout');
 $gridState = ($layoutSetting == 'togglegrid') ? 'disabled' : '';
 $listState = ($layoutSetting == 'togglelist') ? 'disabled': '';
@@ -9,6 +10,10 @@ $isGrid = ($currentLayout == 'grid') ? true : false;
 $queryUrl = $this->url(
     'site/resource', ['controller' => $this->resourceType, 'action' => 'browse'], ['query' => $this->query], true
 );
+
+$filterLocale = (bool) $this->siteSetting('filter_locale_values');
+$lang = $this->lang();
+
 ?>
 <div class="preview-block">
 
@@ -38,8 +43,9 @@ $queryUrl = $this->url(
 $headingTerm = $this->siteSetting('browse_heading_property_term');
 $bodyTerm = $this->siteSetting('browse_body_property_term');
 foreach ($this->resources as $resource):
-    $heading = $headingTerm ? $resource->value($headingTerm, ['default' => $translate('[Untitled]')]) : $resource->displayTitle();
-    $body = $bodyTerm ? $resource->value($bodyTerm) : $resource->displayDescription();
+    $heading = $headingTerm ? $resource->value($headingTerm, ['default' => $translate('[Untitled]')]) : $resource->displayTitle(null, ($filterLocale ? $lang : null));
+    $body = $bodyTerm ? $resource->value($bodyTerm) : $resource->displayDescription(null, ($filterLocale ? $lang : null));
+    
 ?>
     <li class="<?php echo $this->resourceType; ?> resource <?php echo ($isGrid) ? '' : 'media-object'; ?>">
         <?php if ($thumbnail = $this->thumbnail($resource, 'medium')): ?>
@@ -50,9 +56,8 @@ foreach ($this->resources as $resource):
         <div class="resource-meta <?php echo ($isGrid) ? '' : 'media-object-section'; ?>">
             <h4><?php echo $resource->link($heading); ?></h4>
             <?php if ($body): ?>
-            <div class="description"><?php echo $body; ?></div>
+            <div class="description"><?php echo $escape($body); ?></div>
             <?php endif; ?>
-            
         </div>
     </li>
 
